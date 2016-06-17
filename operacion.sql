@@ -1,33 +1,83 @@
-/****** Object:  Table [dbo].[Paquete]    Script Date: 09/06/2016 12:03:46 a.m. ******/
-SET ANSI_NULLS ON
+USE [master]
 GO
-SET QUOTED_IDENTIFIER ON
+/****** Object:  Database [new_ortodental]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+CREATE DATABASE [new_ortodental]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'new_ortodental', FILENAME = N'C:\Program Files\Microsoft SQL Server 2012\MSSQL11.SQLSERVER2012\MSSQL\DATA\new_ortodental.mdf' , SIZE = 5120KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'new_ortodental_log', FILENAME = N'C:\Program Files\Microsoft SQL Server 2012\MSSQL11.SQLSERVER2012\MSSQL\DATA\new_ortodental_log.ldf' , SIZE = 2048KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
 GO
-CREATE TABLE [dbo].[Paquete](
-	[empresa] [smallint] NOT NULL,
-	[idPaquete] [int] NOT NULL,
-	[nombre] [nvarchar](100) NOT NULL,
-	[descripcion] [nvarchar](200) NOT NULL,
-	[precio] [money] NULL,
-	[estPaquete] [nchar](10) NOT NULL,
-	[fechaing] [datetime] NOT NULL,
-	[fechamod] [datetime] NULL,
-	[usuarioing] [nvarchar](50) NOT NULL,
-	[usuariomod] [nvarchar](50) NULL,
-	[maquinaing] [nvarchar](50) NOT NULL,
-	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_Paquete_1] PRIMARY KEY CLUSTERED 
-(
-	[empresa] ASC,
-	[idPaquete] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
+ALTER DATABASE [new_ortodental] SET COMPATIBILITY_LEVEL = 110
 GO
-
-/****** Object:  Table [dbo].[ArqueoCaja]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [new_ortodental].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [new_ortodental] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [new_ortodental] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [new_ortodental] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [new_ortodental] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [new_ortodental] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [new_ortodental] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [new_ortodental] SET AUTO_CREATE_STATISTICS ON 
+GO
+ALTER DATABASE [new_ortodental] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [new_ortodental] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [new_ortodental] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [new_ortodental] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [new_ortodental] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [new_ortodental] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [new_ortodental] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [new_ortodental] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [new_ortodental] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [new_ortodental] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [new_ortodental] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [new_ortodental] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [new_ortodental] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [new_ortodental] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [new_ortodental] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [new_ortodental] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [new_ortodental] SET RECOVERY FULL 
+GO
+ALTER DATABASE [new_ortodental] SET  MULTI_USER 
+GO
+ALTER DATABASE [new_ortodental] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [new_ortodental] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [new_ortodental] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [new_ortodental] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'new_ortodental', N'ON'
+GO
+USE [new_ortodental]
+GO
+/****** Object:  Table [dbo].[ArqueoCaja]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -50,7 +100,7 @@ CREATE TABLE [dbo].[ArqueoCaja](
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
 	[estado] [int] NOT NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [timestamp] NOT NULL,
  CONSTRAINT [PK_ArqueoCaja] PRIMARY KEY CLUSTERED 
 (
@@ -63,8 +113,34 @@ CREATE TABLE [dbo].[ArqueoCaja](
 GO
 SET ANSI_PADDING OFF
 GO
+/****** Object:  Table [dbo].[CabCatalogo]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CabCatalogo](
+	[cc_empresa] [smallint] NOT NULL,
+	[cc_IdCatalogo] [int] IDENTITY(1,1) NOT NULL,
+	[cc_nombre] [nvarchar](50) NOT NULL,
+	[cc_nomVal1] [nvarchar](50) NULL,
+	[cc_nomVal2] [nvarchar](50) NULL,
+	[cc_nomVal3] [nvarchar](50) NULL,
+	[cc_fechaing] [datetime] NOT NULL,
+	[cc_fechamod] [datetime] NULL,
+	[cc_usuarioing] [nvarchar](50) NOT NULL,
+	[cc_usuariomod] [nvarchar](50) NULL,
+	[cc_maquinaing] [nvarchar](50) NOT NULL,
+	[cc_maquinamod] [nvarchar](50) NULL,
+	[cc_estado] [int] NOT NULL,
+	[cc_timestamp] [timestamp] NOT NULL,
+ CONSTRAINT [PK_CabCatalogo_1] PRIMARY KEY CLUSTERED 
+(
+	[cc_IdCatalogo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
-/****** Object:  Table [dbo].[CierreCaja]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+GO
+/****** Object:  Table [dbo].[CierreCaja]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -103,7 +179,7 @@ CREATE TABLE [dbo].[CierreCaja](
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
 	[estado] [int] NOT NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [timestamp] NOT NULL,
  CONSTRAINT [PK_CierreCaja] PRIMARY KEY CLUSTERED 
 (
@@ -115,45 +191,7 @@ CREATE TABLE [dbo].[CierreCaja](
 GO
 SET ANSI_PADDING OFF
 GO
-
-
-/****** Object:  Table [dbo].[DetalleCierreCaja]    Script Date: 09/06/2016 12:03:46 a.m. ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[DetalleCierreCaja](
-	[empresa] [smallint] NOT NULL,
-	[idCierreCaja] [int] NOT NULL,
-	[idDetalleCierreCaja] [int] NOT NULL,
-	[idFormaPago] [char](10) NOT NULL,
-	[monto] [money] NOT NULL,
-	[fechaing] [datetime] NOT NULL,
-	[fechamod] [datetime] NULL,
-	[usuarioing] [nvarchar](50) NOT NULL,
-	[usuariomod] [nvarchar](50) NULL,
-	[maquinaing] [nvarchar](50) NOT NULL,
-	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [timestamp] NOT NULL,
- CONSTRAINT [PK_DetalleCierreCaja] PRIMARY KEY CLUSTERED 
-(
-	[empresa] ASC,
-	[idCierreCaja] ASC,
-	[idDetalleCierreCaja] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-
-
-
-
-/****** Object:  Table [dbo].[CierreDiario]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+/****** Object:  Table [dbo].[CierreDiario]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -173,7 +211,7 @@ CREATE TABLE [dbo].[CierreDiario](
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
 	[estado] [int] NOT NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [timestamp] NOT NULL,
  CONSTRAINT [PK_CierreDiario] PRIMARY KEY CLUSTERED 
 (
@@ -186,11 +224,12 @@ CREATE TABLE [dbo].[CierreDiario](
 GO
 SET ANSI_PADDING OFF
 GO
-
-/****** Object:  Table [dbo].[CierreMensualDocumentoPromo]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+/****** Object:  Table [dbo].[CierreMensualDocumentoPromo]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[CierreMensualDocumentoPromo](
 	[empresa] [smallint] NOT NULL,
@@ -215,7 +254,7 @@ CREATE TABLE [dbo].[CierreMensualDocumentoPromo](
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
 	[estado] [int] NOT NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [timestamp] NOT NULL,
  CONSTRAINT [PK_CierreMensualTarjeta_1] PRIMARY KEY CLUSTERED 
 (
@@ -228,9 +267,9 @@ CREATE TABLE [dbo].[CierreMensualDocumentoPromo](
 ) ON [PRIMARY]
 
 GO
-
-
-/****** Object:  Table [dbo].[CitaActual]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Cita]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -240,7 +279,7 @@ GO
 CREATE TABLE [dbo].[Cita](
 	[empresa] [int] NOT NULL,
 	[idSucursal] [int] NOT NULL,
-	[idCitaActual] [int] NOT NULL,
+	[idCita] [int] IDENTITY(1,1) NOT NULL,
 	[cliente] [int] NOT NULL,
 	[fecha] [date] NOT NULL,
 	[dia] [int] NOT NULL,
@@ -256,61 +295,18 @@ CREATE TABLE [dbo].[Cita](
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
 	[estado] [int] NOT NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [timestamp] NOT NULL,
- CONSTRAINT [PK_CitaActual_1] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Cita] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
-	[idCitaActual] ASC
+	[idCita] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 SET ANSI_PADDING OFF
 GO
-
-/****** Object:  Table [dbo].[DetalleCitaActual]    Script Date: 09/06/2016 12:03:46 a.m. ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[DetalleCita](
-	[empresa] [int] NOT NULL,
-	[idSucursal] [int] NOT NULL,
-	[idCita] [int] NOT NULL,
-	[idDetalleCita] [int] NOT NULL,
-	[empleado] [int] NOT NULL,
-	[idServicio] [int] NOT NULL,
-	[horaInicio] [char](8) NULL,
-	[horaFin] [char](8) NULL,
-	[estRegistro] [char](2) NOT NULL,
-	[clasificacion] [char](10) NULL,
-	[comentarios] [varchar](300) NULL,
-	[fechaing] [datetime] NOT NULL,
-	[fechamod] [datetime] NULL,
-	[usuarioing] [varchar](50) NOT NULL,
-	[usuariomod] [varchar](50) NULL,
-	[maquinaing] [varchar](50) NOT NULL,
-	[maquinamod] [varchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [timestamp] NOT NULL,
- CONSTRAINT [PK_DetalleCitaActual] PRIMARY KEY CLUSTERED 
-(
-	[empresa] ASC,
-	[idSucursal] ASC,
-	[idCitaActual] ASC,
-	[idDetalleCitaActual] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-
-
-/****** Object:  Table [dbo].[CuentaContable]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+/****** Object:  Table [dbo].[CuentaContable]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -329,7 +325,7 @@ CREATE TABLE [dbo].[CuentaContable](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[estado] [int] NOT NULL,
 	[rowVersion] [timestamp] NOT NULL,
  CONSTRAINT [PK_CuentaContable] PRIMARY KEY CLUSTERED 
@@ -342,12 +338,7 @@ CREATE TABLE [dbo].[CuentaContable](
 GO
 SET ANSI_PADDING OFF
 GO
-
-
-
-
-
-
+/****** Object:  Table [dbo].[CuentaXCobrar]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -356,7 +347,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[CuentaXCobrar](
 	[empresa] [smallint] NOT NULL,
-	[idCuentaXCobrar] [int] NOT NULL,
+	[idCuentaXCobrar] [int] IDENTITY(1,1) NOT NULL,
 	[cliente] [int] NOT NULL,
 	[saldo] [money] NOT NULL,
 	[fechaUltMov] [datetime] NOT NULL,
@@ -368,11 +359,10 @@ CREATE TABLE [dbo].[CuentaXCobrar](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [timestamp] NOT NULL,
- CONSTRAINT [PK_CuentaXCobrar_1] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_CuentaXCobrar] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
 	[idCuentaXCobrar] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
@@ -380,9 +370,7 @@ CREATE TABLE [dbo].[CuentaXCobrar](
 GO
 SET ANSI_PADDING OFF
 GO
-
-
-
+/****** Object:  Table [dbo].[Descuento]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -391,7 +379,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[Descuento](
 	[empresa] [smallint] NOT NULL,
-	[idDescuento] [int] NOT NULL,
+	[idDescuento] [int] IDENTITY(1,1) NOT NULL,
 	[idSucursal] [int] NOT NULL,
 	[tipoDescuento] [char](10) NOT NULL,
 	[descripcion] [nvarchar](200) NOT NULL,
@@ -408,11 +396,10 @@ CREATE TABLE [dbo].[Descuento](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [timestamp] NOT NULL,
- CONSTRAINT [PK_Descuento] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Descuento_1] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
 	[idDescuento] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
@@ -420,106 +407,56 @@ CREATE TABLE [dbo].[Descuento](
 GO
 SET ANSI_PADDING OFF
 GO
-
-
-/****** Object:  Table [dbo].[Despacho]    Script Date: 09/06/2016 12:03:46 a.m. ******/
-/*
-NO SE VA A MANEJAR ESTA TABLA.
-EN SU LUGAR, SE VA A DEFINIR UNA TABLA DE UBICACION.
-
+/****** Object:  Table [dbo].[DetalleCierreCaja]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[Despacho](
+CREATE TABLE [dbo].[DetalleCierreCaja](
 	[empresa] [smallint] NOT NULL,
-	[idSucursal] [int] NOT NULL,
-	[idDespacho] [int] NOT NULL,
-	[idOrdenServicio] [int] NOT NULL,
-	[idDetalleOrdenServicio] [int] NOT NULL,
-	[noBoletaDespacho] [int] NULL,
-	[idEmpleado] [int] NOT NULL,
-	[estDespacho] [char](10) NOT NULL,
+	[idCierreCaja] [int] NOT NULL,
+	[idDetalleCierreCaja] [int] NOT NULL,
+	[idFormaPago] [char](10) NOT NULL,
+	[monto] [money] NOT NULL,
 	[fechaing] [datetime] NOT NULL,
 	[fechamod] [datetime] NULL,
 	[usuarioing] [nvarchar](50) NOT NULL,
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [timestamp] NOT NULL,
- CONSTRAINT [PK_Despacho] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_DetalleCierreCaja] PRIMARY KEY CLUSTERED 
 (
 	[empresa] ASC,
-	[idSucursal] ASC,
-	[idDespacho] ASC
+	[idCierreCaja] ASC,
+	[idDetalleCierreCaja] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 SET ANSI_PADDING OFF
 GO
-
-
-
+/****** Object:  Table [dbo].[DetalleCita]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[DetalleDespacho](
-	[empresa] [smallint] NOT NULL,
-	[idSucursal] [int] NOT NULL,
-	[idDespacho] [int] NOT NULL,
-	[idDetalleDespacho] [int] NOT NULL,
-	[idProducto] [int] NOT NULL,
-	[cantidad] [int] NOT NULL,
-	[estDetalleDespacho] [char](10) NOT NULL,
-	[fechaing] [datetime] NOT NULL,
-	[fechamod] [datetime] NULL,
-	[usuarioing] [nvarchar](50) NOT NULL,
-	[usuariomod] [nvarchar](50) NULL,
-	[maquinaing] [nvarchar](50) NOT NULL,
-	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [timestamp] NOT NULL,
- CONSTRAINT [PK_DetalleDespacho] PRIMARY KEY CLUSTERED 
-(
-	[empresa] ASC,
-	[idSucursal] ASC,
-	[idDespacho] ASC,
-	[idDetalleDespacho] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-*/
-
-/****** Object:  Table [dbo].[OrdenServicio]    Script Date: 09/06/2016 12:03:46 a.m. ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[OrdenCliente](
+CREATE TABLE [dbo].[DetalleCita](
 	[empresa] [int] NOT NULL,
 	[idSucursal] [int] NOT NULL,
-	[idOrdenCliente] [int] NOT NULL,
-	[cliente] [int] NOT NULL,
-	[fecha] [date] NULL,
-	[dia] [int] NULL,
+	[idCita] [int] NOT NULL,
+	[idDetalleCita] [int] IDENTITY(1,1) NOT NULL,
+	[empleado] [int] NOT NULL,
+	[idServicio] [int] NOT NULL,
 	[horaInicio] [char](8) NULL,
 	[horaFin] [char](8) NULL,
 	[estRegistro] [char](2) NOT NULL,
-	--[idOrdenPago] [int] NOT NULL,
-	[idCitaActual] [int] NULL,
-	[comentariosCita] [varchar](300) NULL,
+	[clasificacion] [char](10) NULL,
 	[comentarios] [varchar](300) NULL,
 	[fechaing] [datetime] NOT NULL,
 	[fechamod] [datetime] NULL,
@@ -527,22 +464,52 @@ CREATE TABLE [dbo].[OrdenCliente](
 	[usuariomod] [varchar](50) NULL,
 	[maquinaing] [varchar](50) NOT NULL,
 	[maquinamod] [varchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_OrdenServicio] PRIMARY KEY CLUSTERED 
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [timestamp] NOT NULL,
+ CONSTRAINT [PK_DetalleCita] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
-	[idSucursal] ASC,
-	[idOrdenCliente] ASC
+	[idDetalleCita] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 SET ANSI_PADDING OFF
 GO
+/****** Object:  Table [dbo].[DetalleOrdenProducto]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[DetalleOrdenProducto](
+	[empresa] [smallint] NOT NULL,
+	[idSucursal] [int] NOT NULL,
+	[idOrdenCliente] [int] NOT NULL,
+	[idDetalleOrdenProducto] [int] IDENTITY(1,1) NOT NULL,
+	[idProducto] [int] NOT NULL,
+	[cantidad] [int] NOT NULL,
+	[costoUnitario] [money] NOT NULL,
+	[montoTotal] [money] NOT NULL,
+	[estado] [varchar](10) NOT NULL,
+	[fechaing] [datetime] NOT NULL,
+	[fechamod] [datetime] NULL,
+	[usuarioing] [varchar](50) NOT NULL,
+	[usuariomod] [varchar](50) NULL,
+	[maquinaing] [varchar](50) NOT NULL,
+	[maquinamod] [varchar](50) NULL,
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [timestamp] NOT NULL,
+ CONSTRAINT [PK_DetalleOrdenProducto_1] PRIMARY KEY CLUSTERED 
+(
+	[idDetalleOrdenProducto] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
-
-/****** Object:  Table [dbo].[DetalleOrdenServicio]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[DetalleOrdenServicio]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -553,7 +520,7 @@ CREATE TABLE [dbo].[DetalleOrdenServicio](
 	[empresa] [smallint] NOT NULL,
 	[idSucursal] [int] NOT NULL,
 	[idOrdenCliente] [int] NOT NULL,
-	[idDetalleOrdenServicio] [int] NOT NULL,
+	[idDetalleOrdenServicio] [int] IDENTITY(1,1) NOT NULL,
 	[empleado] [int] NOT NULL,
 	[idServicio] [int] NOT NULL,
 	[horaInicio] [char](8) NULL,
@@ -571,13 +538,10 @@ CREATE TABLE [dbo].[DetalleOrdenServicio](
 	[usuariomod] [varchar](50) NULL,
 	[maquinaing] [varchar](50) NOT NULL,
 	[maquinamod] [varchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [timestamp] NOT NULL,
- CONSTRAINT [PK_DetalleOrdenServicio] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_DetalleOrdenServicio_1] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
-	[idSucursal] ASC,
-	[idOrdenServicio] ASC,
 	[idDetalleOrdenServicio] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
@@ -585,35 +549,69 @@ CREATE TABLE [dbo].[DetalleOrdenServicio](
 GO
 SET ANSI_PADDING OFF
 GO
-
-create table DetalleOrdenProducto(
-    empresa smallint not null,
-	idSucursal int not null,
-    idOrdenCliente int not null,
-	idDetalleOrdenProducto int not null,
-    idProducto int not null,
-    cantidad int not null,
-    costoUnitario money not null,
-    montoTotal money not null,
-    estado varchar(10) not null,
-    [fechaing] [datetime] NOT NULL,
-    [fechamod] [datetime] NULL,
-	[usuarioing] [varchar](50) NOT NULL,
-	[usuariomod] [varchar](50) NULL,
-	[maquinaing] [varchar](50) NOT NULL,
-	[maquinamod] [varchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [timestamp] NOT NULL,  
-	CONSTRAINT [PK_DetalleOrdenServicio] PRIMARY KEY CLUSTERED (
-	   empresa asc
-	   ,idOrdenProducto asc
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+/****** Object:  Table [dbo].[DetalleServicioPlan]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
+GO
+CREATE TABLE [dbo].[DetalleServicioPlan](
+	[empresa] [smallint] NULL,
+	[idSucursal] [int] NULL,
+	[idServicioPlan] [int] NULL,
+	[idServicio] [int] NULL,
+	[montoServicio] [money] NULL,
+	[descuento] [money] NULL,
+	[fechaInicio] [datetime] NULL,
+	[sesiones] [int] NULL,
+	[fechaing] [datetime] NOT NULL,
+	[fechamod] [datetime] NULL,
+	[usuarioing] [nvarchar](50) NOT NULL,
+	[usuariomod] [nvarchar](50) NULL,
+	[maquinaing] [nvarchar](50) NOT NULL,
+	[maquinamod] [nvarchar](50) NULL,
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [int] NOT NULL
 ) ON [PRIMARY]
 
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[DetCatalogo]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[DetCatalogo](
+	[cd_empresa] [smallint] NOT NULL,
+	[cd_IdCatalogo] [int] NOT NULL,
+	[cd_codigo] [char](10) NOT NULL,
+	[cd_valor] [nvarchar](100) NOT NULL,
+	[cd_valor1] [nvarchar](100) NULL,
+	[cd_valor2] [nvarchar](100) NULL,
+	[cd_valor3] [nvarchar](100) NULL,
+	[cd_fechaing] [datetime] NOT NULL,
+	[cd_fechamod] [datetime] NULL,
+	[cd_usuarioing] [nvarchar](50) NOT NULL,
+	[cd_usuariomod] [nvarchar](50) NULL,
+	[cd_maquinaing] [nvarchar](50) NOT NULL,
+	[cd_maquinamod] [nvarchar](50) NULL,
+	[cd_estado] [int] NOT NULL,
+	[cd_timestamp] [timestamp] NOT NULL,
+ CONSTRAINT [PK_DetCatalogo] PRIMARY KEY CLUSTERED 
+(
+	[cd_IdCatalogo] ASC,
+	[cd_codigo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
-
-
-/****** Object:  Table [dbo].[Documento]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Documento]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -623,9 +621,10 @@ GO
 CREATE TABLE [dbo].[Documento](
 	[empresa] [smallint] NOT NULL,
 	[idSucursal] [int] NOT NULL,
-	[idDoc] [int] NOT NULL,
+	[idDoc] [int] IDENTITY(1,1) NOT NULL,
 	[tipoDocumento] [char](10) NOT NULL,
 	[tipoAsociado] [char](10) NULL,
+	[idSerieFactura] [int] NULL,
 	[asociado] [int] NULL,
 	[nombreAsociado] [nvarchar](250) NULL,
 	[direccionAsociado] [nvarchar](250) NULL,
@@ -649,24 +648,23 @@ CREATE TABLE [dbo].[Documento](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [timestamp] NOT NULL,
- CONSTRAINT [PK_Documento] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Documento_1] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
-	[idSucursal] ASC,
-	[idDoc] ASC,
-	[tipoDocumento] ASC
+	[idDoc] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[DocumentoPromo]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+/****** Object:  Table [dbo].[DocumentoPromo]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[DocumentoPromo](
 	[empresa] [smallint] NOT NULL,
@@ -684,7 +682,7 @@ CREATE TABLE [dbo].[DocumentoPromo](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
  CONSTRAINT [PK_Tarjeta_1] PRIMARY KEY CLUSTERED 
 (
@@ -693,10 +691,14 @@ CREATE TABLE [dbo].[DocumentoPromo](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[DocumentoPromoPaquete]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[DocumentoPromoPaquete]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[DocumentoPromoPaquete](
 	[empresa] [smallint] NOT NULL,
@@ -712,7 +714,7 @@ CREATE TABLE [dbo].[DocumentoPromoPaquete](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
  CONSTRAINT [PK_TarjetaPaquete_1] PRIMARY KEY CLUSTERED 
 (
@@ -724,10 +726,14 @@ CREATE TABLE [dbo].[DocumentoPromoPaquete](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[DocumentoPromoProducto]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[DocumentoPromoProducto]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[DocumentoPromoProducto](
 	[empresa] [smallint] NOT NULL,
@@ -741,7 +747,7 @@ CREATE TABLE [dbo].[DocumentoPromoProducto](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
  CONSTRAINT [PK_DocumentoPromoProducto] PRIMARY KEY CLUSTERED 
 (
@@ -752,12 +758,14 @@ CREATE TABLE [dbo].[DocumentoPromoProducto](
 ) ON [PRIMARY]
 
 GO
-
-
-
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Existencia]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[Existencia](
 	[empresa] [smallint] NOT NULL,
@@ -774,7 +782,7 @@ CREATE TABLE [dbo].[Existencia](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
  CONSTRAINT [PK_Existencia] PRIMARY KEY CLUSTERED 
 (
@@ -787,12 +795,14 @@ CREATE TABLE [dbo].[Existencia](
 ) ON [PRIMARY]
 
 GO
-
-
-/****** Object:  Table [dbo].[FacturaActualCaja]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[FacturaActualCaja]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[FacturaActualCaja](
 	[empresa] [int] NOT NULL,
@@ -804,19 +814,19 @@ CREATE TABLE [dbo].[FacturaActualCaja](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_FacturaActualCaja] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_FacturaActualCaja_1] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
-	[terminal] ASC
+	[terminal] ASC,
+	[idDoc] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
-
-
-/****** Object:  Table [dbo].[FacturaFormaPago]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[FacturaFormaPago]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -825,7 +835,7 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[FacturaFormaPago](
 	[empresa] [smallint] NOT NULL,
-	[idFacturaFormaPago] [int] NOT NULL,
+	[idFacturaFormaPago] [int] IDENTITY(1,1) NOT NULL,
 	[idSucursal] [int] NOT NULL,
 	[idDoc] [int] NOT NULL,
 	[idMovDocPromo] [int] NULL,
@@ -850,11 +860,10 @@ CREATE TABLE [dbo].[FacturaFormaPago](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_FacturaFormaPago] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_FacturaFormaPago_1] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
 	[idFacturaFormaPago] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
@@ -862,10 +871,39 @@ CREATE TABLE [dbo].[FacturaFormaPago](
 GO
 SET ANSI_PADDING OFF
 GO
+/****** Object:  Table [dbo].[LoteDocumentoPromo]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
+GO
+CREATE TABLE [dbo].[LoteDocumentoPromo](
+	[empresa] [smallint] NOT NULL,
+	[idSucrusal] [int] NOT NULL,
+	[idLoteDocumentoPromo] [int] NOT NULL,
+	[tipoLote] [char](10) NOT NULL,
+	[idInicio] [bigint] NOT NULL,
+	[idFinal] [bigint] NOT NULL,
+	[fechaing] [datetime] NOT NULL,
+	[fechamod] [datetime] NULL,
+	[usuarioing] [nvarchar](50) NOT NULL,
+	[usuariomod] [nvarchar](50) NULL,
+	[maquinaing] [nvarchar](50) NOT NULL,
+	[maquinamod] [nvarchar](50) NULL,
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [int] NOT NULL,
+ CONSTRAINT [PK_LoteDocumentoPromo_1] PRIMARY KEY CLUSTERED 
+(
+	[empresa] ASC,
+	[idLoteDocumentoPromo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
-
-
-/****** Object:  Table [dbo].[Movimiento]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Movimiento]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -875,7 +913,7 @@ GO
 CREATE TABLE [dbo].[Movimiento](
 	[empresa] [smallint] NOT NULL,
 	[idSucursal] [int] NOT NULL,
-	[idMov] [int] NOT NULL,
+	[idMov] [int] IDENTITY(1,1) NOT NULL,
 	[prodServ] [char](1) NOT NULL,
 	[idProdServ] [int] NOT NULL,
 	[cantidad] [int] NOT NULL,
@@ -893,22 +931,18 @@ CREATE TABLE [dbo].[Movimiento](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_Movimiento] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Movimiento_1] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
-	[idSucursal] ASC,
-	[idMov] ASC,
-	[tipoMovimiento] ASC,
-	[idDoc] ASC
+	[idMov] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[MovimientoCuentaXCobrar]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+/****** Object:  Table [dbo].[MovimientoCuentaXCobrar]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -933,12 +967,10 @@ CREATE TABLE [dbo].[MovimientoCuentaXCobrar](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_MovimientoCuentaXCobrar] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_MovimientoCuentaXCobrar_1] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
-	[idCuentaXCobrar] ASC,
 	[idMovCuentaXCobrar] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
@@ -946,7 +978,7 @@ CREATE TABLE [dbo].[MovimientoCuentaXCobrar](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[MovimientoDocumentoPromo]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+/****** Object:  Table [dbo].[MovimientoDocumentoPromo]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -976,7 +1008,7 @@ CREATE TABLE [dbo].[MovimientoDocumentoPromo](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
  CONSTRAINT [PK_MovimientoDocumentoPromo] PRIMARY KEY CLUSTERED 
 (
@@ -990,11 +1022,7 @@ CREATE TABLE [dbo].[MovimientoDocumentoPromo](
 GO
 SET ANSI_PADDING OFF
 GO
-
-
-
-
-/****** Object:  Table [dbo].[NitFactura]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+/****** Object:  Table [dbo].[NitFactura]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1014,9 +1042,9 @@ CREATE TABLE [dbo].[NitFactura](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_NitFactura] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_NitFactura_1] PRIMARY KEY CLUSTERED 
 (
 	[empresa] ASC,
 	[nit] ASC
@@ -1026,48 +1054,250 @@ CREATE TABLE [dbo].[NitFactura](
 GO
 SET ANSI_PADDING OFF
 GO
-
-
-
-/****** Object:  Table [dbo].[OrdenPago]    Script Date: 09/06/2016 12:03:46 a.m. ******/
---ESTE CONCEPTO YA NO SE VA A UTILIZAR.
-/*SET ANSI_NULLS ON
+/****** Object:  Table [dbo].[OrdenCliente]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[OrdenPago](
+CREATE TABLE [dbo].[OrdenCliente](
 	[empresa] [int] NOT NULL,
 	[idSucursal] [int] NOT NULL,
-	[idOrdenPago] [int] NOT NULL,
-	[fecha] [datetime] NOT NULL,
+	[idOrdenCliente] [int] IDENTITY(1,1) NOT NULL,
 	[cliente] [int] NOT NULL,
+	[fecha] [date] NULL,
+	[dia] [int] NULL,
+	[horaInicio] [char](8) NULL,
+	[horaFin] [char](8) NULL,
 	[estRegistro] [char](2) NOT NULL,
+	[idCitaActual] [int] NULL,
+	[comentariosCita] [varchar](300) NULL,
+	[comentarios] [varchar](300) NULL,
 	[fechaing] [datetime] NOT NULL,
 	[fechamod] [datetime] NULL,
-	[usuarioing] [nvarchar](50) NOT NULL,
-	[usuariomod] [nvarchar](50) NULL,
-	[maquinaing] [nvarchar](50) NOT NULL,
-	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[usuarioing] [varchar](50) NOT NULL,
+	[usuariomod] [varchar](50) NULL,
+	[maquinaing] [varchar](50) NOT NULL,
+	[maquinamod] [varchar](50) NULL,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_OrdenPago] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_OrdenCliente] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
-	[idSucursal] ASC,
-	[idOrdenPago] ASC
+	[idOrdenCliente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 SET ANSI_PADDING OFF
 GO
-*/
+/****** Object:  Table [dbo].[Paquete]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Paquete](
+	[empresa] [smallint] NOT NULL,
+	[idPaquete] [int] NOT NULL,
+	[nombre] [nvarchar](100) NOT NULL,
+	[descripcion] [nvarchar](200) NOT NULL,
+	[precio] [money] NULL,
+	[estPaquete] [nchar](10) NOT NULL,
+	[fechaing] [datetime] NOT NULL,
+	[fechamod] [datetime] NULL,
+	[usuarioing] [nvarchar](50) NOT NULL,
+	[usuariomod] [nvarchar](50) NULL,
+	[maquinaing] [nvarchar](50) NOT NULL,
+	[maquinamod] [nvarchar](50) NULL,
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [int] NOT NULL,
+ CONSTRAINT [PK_Paquete_1] PRIMARY KEY CLUSTERED 
+(
+	[empresa] ASC,
+	[idPaquete] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[planilla_empleado]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[planilla_empleado](
+	[correlativo] [int] IDENTITY(1,1) NOT NULL,
+	[corrPlanilla] [int] NOT NULL,
+	[corrEmpleado] [int] NOT NULL,
+	[montoTotal] [money] NOT NULL,
+	[descripcion] [varchar](50) NULL,
+	[fecha_creacion] [datetime] NOT NULL,
+	[bonificacion] [money] NOT NULL,
+	[sueldoBase] [money] NOT NULL,
+	[descuento] [money] NOT NULL,
+	[comision] [money] NOT NULL,
+	[igss] [money] NOT NULL,
+	[costo_hora_extra] [money] NOT NULL,
+	[asistencia] [int] NOT NULL,
+	[hora_extra] [money] NULL,
+	[descuentoInasistencia] [money] NULL,
+	[eliminado] [char](1) NULL,
+ CONSTRAINT [PK_planilla_empleado] PRIMARY KEY CLUSTERED 
+(
+	[correlativo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[planilla_empleado_rubro]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
+GO
+CREATE TABLE [dbo].[planilla_empleado_rubro](
+	[correlativo] [int] IDENTITY(1,1) NOT NULL,
+	[corrPlanillaEmp] [int] NULL,
+	[rubro] [varchar](50) NOT NULL,
+	[cantidad] [int] NOT NULL,
+	[montoTotal] [money] NOT NULL,
+	[signo] [char](1) NOT NULL,
+	[rowVersion] [int] NOT NULL,
+	[descripcion] [varchar](50) NULL,
+	[costoUnitario] [money] NULL,
+ CONSTRAINT [PK_planilla_empleado_rubro] PRIMARY KEY CLUSTERED 
+(
+	[correlativo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
-/****** Object:  Table [dbo].[Producto]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[planilla_rubro_descripcion]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
+GO
+CREATE TABLE [dbo].[planilla_rubro_descripcion](
+	[correlativo] [int] IDENTITY(1,1) NOT NULL,
+	[rubro] [varchar](20) NOT NULL,
+	[descripcion] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_planilla_rubro_descripcion] PRIMARY KEY CLUSTERED 
+(
+	[correlativo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[planilla_total]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[planilla_total](
+	[correlativo] [int] IDENTITY(1,1) NOT NULL,
+	[fecha_creacion] [datetime] NOT NULL,
+	[autorizada] [char](1) NOT NULL,
+	[montoTotal] [money] NOT NULL,
+	[registros] [int] NOT NULL,
+	[descuentoTotal] [money] NOT NULL,
+	[bonosTotal] [money] NOT NULL,
+	[comisionTotal] [money] NOT NULL,
+	[tipoPlanilla] [int] NOT NULL,
+	[categoriaPlanilla] [varchar](5) NOT NULL,
+	[descripcion] [varchar](100) NULL,
+	[bloqueada] [char](1) NOT NULL,
+	[enviado] [char](1) NOT NULL,
+	[fecha_planilla] [datetime] NOT NULL,
+	[numeroPlan] [varchar](5) NULL,
+	[numeroEnvio] [varchar](20) NULL,
+	[igssTotal] [money] NOT NULL,
+	[usuario] [varchar](20) NOT NULL,
+	[eliminado] [char](1) NOT NULL,
+	[terminal] [varchar](50) NOT NULL,
+	[rowVersion] [int] NOT NULL,
+	[horasExtraTotal] [money] NULL,
+ CONSTRAINT [PK_planillaTotal] PRIMARY KEY CLUSTERED 
+(
+	[correlativo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[PrecioProducto]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[PrecioProducto](
+	[empresa] [smallint] NOT NULL,
+	[idPrecProdServ] [int] IDENTITY(1,1) NOT NULL,
+	[tipoPrecio] [char](10) NOT NULL,
+	[idProducto] [int] NOT NULL,
+	[precio] [money] NOT NULL,
+	[precioMaximo] [money] NULL,
+	[fechaVigencia] [datetime] NULL,
+	[fechaing] [datetime] NOT NULL,
+	[fechamod] [datetime] NULL,
+	[usuarioing] [nvarchar](50) NOT NULL,
+	[usuariomod] [nvarchar](50) NULL,
+	[maquinaing] [nvarchar](50) NOT NULL,
+	[maquinamod] [nvarchar](50) NULL,
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [int] NOT NULL,
+ CONSTRAINT [PK_PrecioProducto] PRIMARY KEY CLUSTERED 
+(
+	[idPrecProdServ] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[PrecioServicio]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[PrecioServicio](
+	[empresa] [smallint] NOT NULL,
+	[idPrecServicio] [int] IDENTITY(1,1) NOT NULL,
+	[tipoPrecio] [char](10) NOT NULL,
+	[idServicio] [int] NOT NULL,
+	[precio] [money] NOT NULL,
+	[precioMaximo] [money] NOT NULL,
+	[fechaVigencia] [datetime] NOT NULL,
+ CONSTRAINT [PK_PrecioServicio] PRIMARY KEY CLUSTERED 
+(
+	[idPrecServicio] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Producto]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1077,7 +1307,7 @@ GO
 CREATE TABLE [dbo].[Producto](
 	[empresa] [smallint] NOT NULL,
 	[tipoProducto] [int] NOT NULL,
-	[idProd] [int] NOT NULL,
+	[idProd] [int] IDENTITY(1,1) NOT NULL,
 	[nombre] [nvarchar](100) NOT NULL,
 	[descripcion] [nvarchar](150) NULL,
 	[codigoBarras] [varchar](50) NULL,
@@ -1090,266 +1320,54 @@ CREATE TABLE [dbo].[Producto](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_Producto_1] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Producto] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
-	[tipoProducto] ASC,
 	[idProd] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 
 GO
 SET ANSI_PADDING OFF
 GO
-
-
-/****** Object:  Table [dbo].[PrecioProductoServicio]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+/****** Object:  Table [dbo].[ProductoProveedor]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[PrecioProductoServicio](
-	[empresa] [smallint] NOT NULL,
-	[idPrecProdServ] [int] NOT NULL,
-	[tipoPrecio] [char](10) NOT NULL,
-	[idProdServ] [int] NOT NULL,
-	[precio] [money] NOT NULL,
-	[precioMaximo] [money] NULL,
-	[fechaVigencia] [datetime] NULL,
+CREATE TABLE [dbo].[ProductoProveedor](
+	[empresa] [smallint] NULL,
+	[idProducto] [int] NOT NULL,
+	[idProveedor] [int] NOT NULL,
+	[ultimaCompra] [datetime] NULL,
 	[fechaing] [datetime] NOT NULL,
-	[fechamod] [datetime] NULL,
 	[usuarioing] [nvarchar](50) NOT NULL,
-	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
-	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_PrecioProductoServicio] PRIMARY KEY CLUSTERED 
+	[eliminado] [char](1) NOT NULL,
+ CONSTRAINT [PK_ProductoProveedor] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
-	[idPrecProdServ] ASC
+	[idProducto] ASC,
+	[idProveedor] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 SET ANSI_PADDING OFF
 GO
-
-/****** Object:  Table [dbo].[TipoProducto]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+/****** Object:  Table [dbo].[Propina]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[TipoProducto](
-	[empresa] [smallint] NOT NULL,
-	[idTipoProducto] [int] NOT NULL,
-	[clasificacionTP] [char](10) NOT NULL,
-	[nombre] [nvarchar](50) NOT NULL,
-	[descripcion] [nvarchar](150) NULL,
-	[padre] [int] NULL,
-	[fechaing] [datetime] NOT NULL,
-	[fechamod] [datetime] NULL,
-	[usuarioing] [nvarchar](50) NOT NULL,
-	[usuariomod] [nvarchar](50) NULL,
-	[maquinaing] [nvarchar](50) NOT NULL,
-	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_TipoProducto_1] PRIMARY KEY CLUSTERED 
-(
-	[empresa] ASC,
-	[idTipoProducto] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-
-
-
-/****** Object:  Table [dbo].[Servicio]    Script Date: 09/06/2016 12:03:46 a.m. ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Servicio](
-	[empresa] [smallint] NOT NULL,
-	[tipoServicio] [int] NOT NULL,
-	[idServicio] [int] NOT NULL,
-	[nombre] [nvarchar](50) NOT NULL,
-	[descripcion] [nvarchar](150) NULL,
-	[duracionServicio] [int] NOT NULL,
-	[fechaing] [datetime] NOT NULL,
-	[fechamod] [datetime] NULL,
-	[usuarioing] [nvarchar](50) NOT NULL,
-	[usuariomod] [nvarchar](50) NULL,
-	[maquinaing] [nvarchar](50) NOT NULL,
-	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_Servicio] PRIMARY KEY CLUSTERED 
-(
-	[empresa] ASC,
-	[idServicio] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
-/****** Object:  Table [dbo].[TipoServicio]    Script Date: 09/06/2016 12:03:46 a.m. ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[TipoServicio](
-	[empresa] [smallint] NOT NULL,
-	[idTipoServicio] [int] NOT NULL,
-	[nombre] [nvarchar](50) NOT NULL,
-	[descripcion] [nvarchar](150) NULL,
-	[padre] [int] NULL,
-	[coordinacion] [char](10) NOT NULL,
-	[cuentaSAP] [nvarchar](50) NULL,
-	[fechaing] [datetime] NOT NULL,
-	[fechamod] [datetime] NULL,
-	[usuarioing] [nvarchar](50) NOT NULL,
-	[usuariomod] [nvarchar](50) NULL,
-	[maquinaing] [nvarchar](50) NOT NULL,
-	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_TipoServicio_1] PRIMARY KEY CLUSTERED 
-(
-	[ts_empresa] ASC,
-	[ts_IdTipoServicio] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-
-
-/****** Object:  Table [dbo].[LoteDocumentoPromo]    Script Date: 09/06/2016 12:03:46 a.m. ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[LoteDocumentoPromo](
-	[empresa] [smallint] NOT NULL,
-	[idSucrusal] [int] NOT NULL,
-	[idLoteDocumentoPromo] [int] NOT NULL,
-	[tipoLote] [char](10) NOT NULL,
-	[idInicio] [bigint] NOT NULL,
-	[idFinal] [bigint] NOT NULL,
-	[fechaing] [datetime] NOT NULL,
-	[fechamod] [datetime] NULL,
-	[usuarioing] [nvarchar](50) NOT NULL,
-	[usuariomod] [nvarchar](50) NULL,
-	[maquinaing] [nvarchar](50) NOT NULL,
-	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_LoteDocumentoPromo_1] PRIMARY KEY CLUSTERED 
-(
-	[ld_empresa] ASC,
-	[ld_IdLoteDocumentoPromo] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET
-
-/*
-solo aplica a empleados.
-no se va a aplicar por el momento.
-
-CREATE TABLE [dbo].[Prestamo](
-	[empresa] [smallint] NOT NULL,
-	[idPrestamo] [int] NOT NULL,
-	[tipoPrestamo] [char](10) NOT NULL,
-	[idEmpleado] [int] NOT NULL,
-	[fecha] [date] NOT NULL,
-	[monto] [money] NOT NULL,
-	[plazo] [int] NOT NULL,
-	[tasaInteres] [money] NOT NULL,
-	[saldo] [money] NOT NULL,
-	[idGestion] [int] NOT NULL,
-	[fechaing] [datetime] NOT NULL,
-	[fechamod] [datetime] NULL,
-	[usuarioing] [nvarchar](50) NOT NULL,
-	[usuariomod] [nvarchar](50) NULL,
-	[maquinaing] [nvarchar](50) NOT NULL,
-	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_Prestamo] PRIMARY KEY CLUSTERED 
-(
-	[empresa] ASC,
-	[IdPrestamo] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-SET ANSI_PADDING OFF
-GO
-
-
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[DetallePrestamo](
-	[empresa] [smallint] NOT NULL,
-	[idPrestamo] [int] NOT NULL,
-	[idDetallePrestamo] [int] NOT NULL,
-	[mes] [int] NOT NULL,
-	[anio] [int] NOT NULL,
-	[descripcion] [varchar](200) NULL,
-	[monto] [money] NULL,
-	[estDetallePrestamo] [char](10) NOT NULL,
-	[fechaing] [datetime] NOT NULL,
-	[fechamod] [datetime] NULL,
-	[usuarioing] [nvarchar](50) NOT NULL,
-	[usuariomod] [nvarchar](50) NULL,
-	[maquinaing] [nvarchar](50) NOT NULL,
-	[maquinamod] [nvarchar](50) NULL,
-	[estado] [int] NOT NULL,
-	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_DetallePrestamo] PRIMARY KEY CLUSTERED 
-(
-	[empresa] ASC,
-	[idPrestamo] ASC,
-	[idDetallePrestamo] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-*/
-
-/****** Object:  Table [dbo].[Propina]    Script Date: 09/06/2016 12:03:46 a.m. ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Propina](
 	[empresa] [int] NOT NULL,
 	[idSucursal] [int] NOT NULL,
-	[idPropina] [int] NOT NULL,
-	--[idOrdenPago] [int] NOT NULL,
-	[idOrdenServicio] [int] NOT NULL,
+	[idPropina] [int] IDENTITY(1,1) NOT NULL,
 	[idDetalleOrdenServicio] [int] NULL,
 	[cantidad] [money] NULL,
 	[fechaing] [datetime] NOT NULL,
@@ -1358,19 +1376,18 @@ CREATE TABLE [dbo].[Propina](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
  CONSTRAINT [PK_Propina] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
-	[idSucursal] ASC,
 	[idPropina] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
-
-
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[SalidaEfectivoCaja]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1396,7 +1413,7 @@ CREATE TABLE [dbo].[SalidaEfectivoCaja](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
  CONSTRAINT [PK_SalidaEfectivoCaja] PRIMARY KEY CLUSTERED 
 (
@@ -1405,9 +1422,10 @@ CREATE TABLE [dbo].[SalidaEfectivoCaja](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
-
-
-/****** Object:  Table [dbo].[SerieFactura]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[SerieFactura]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1417,7 +1435,7 @@ GO
 CREATE TABLE [dbo].[SerieFactura](
 	[empresa] [smallint] NOT NULL,
 	[idSucursal] [int] NOT NULL,
-	[idSerieFactura] [int] NOT NULL,
+	[idSerieFactura] [int] IDENTITY(1,1) NOT NULL,
 	[terminal] [varchar](50) NOT NULL,
 	[tipoCorrelativo] [char](10) NOT NULL,
 	[serie] [varchar](50) NOT NULL,
@@ -1432,17 +1450,55 @@ CREATE TABLE [dbo].[SerieFactura](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_SerieFactura] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_SerieFactura_1] PRIMARY KEY CLUSTERED 
 (
-	[empresa] ASC,
 	[idSerieFactura] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Servicio]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Servicio](
+	[empresa] [smallint] NOT NULL,
+	[tipoServicio] [int] NOT NULL,
+	[idServicio] [int] IDENTITY(1,1) NOT NULL,
+	[nombre] [nvarchar](50) NOT NULL,
+	[descripcion] [nvarchar](150) NULL,
+	[duracionServicio] [int] NOT NULL,
+	[fechaing] [datetime] NOT NULL,
+	[fechamod] [datetime] NULL,
+	[usuarioing] [nvarchar](50) NOT NULL,
+	[usuariomod] [nvarchar](50) NULL,
+	[maquinaing] [nvarchar](50) NOT NULL,
+	[maquinamod] [nvarchar](50) NULL,
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [int] NOT NULL,
+ CONSTRAINT [PK_Servicio_1] PRIMARY KEY CLUSTERED 
+(
+	[idServicio] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
-
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[ServicioEmpleado]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
 CREATE TABLE [dbo].[ServicioEmpleado](
 	[empresa] [int] NOT NULL,
 	[idSucursal] [int] NOT NULL,
@@ -1454,7 +1510,7 @@ CREATE TABLE [dbo].[ServicioEmpleado](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
  CONSTRAINT [PK_ServicioEmpleado] PRIMARY KEY CLUSTERED 
 (
@@ -1467,41 +1523,44 @@ CREATE TABLE [dbo].[ServicioEmpleado](
 ) ON [PRIMARY]
 
 GO
-
-
-
-/****** Object:  Table [dbo].[ServicioTraslape]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[ServicioPlan]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[ServicioTraslape](
-	[empresa] [int] NOT NULL,
-	[idServicioOrigen] [int] NOT NULL,
-	[idServicioTraslape] [int] NOT NULL,
+SET ANSI_PADDING OFF
+GO
+CREATE TABLE [dbo].[ServicioPlan](
+	[empresa] [smallint] NULL,
+	[idServicioPlan] [int] NULL,
+	[idSucursal] [int] NULL,
+	[idCliente] [int] NULL,
+	[montoTotal] [money] NULL,
+	[descuento] [money] NULL,
+	[cuotas] [money] NULL,
+	[plazo] [char](10) NULL,
+	[periodo] [char](10) NULL,
 	[fechaing] [datetime] NOT NULL,
 	[fechamod] [datetime] NULL,
 	[usuarioing] [nvarchar](50) NOT NULL,
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
-	[rowVersion] [int] NOT NULL,
- CONSTRAINT [PK_ServicioTraslape] PRIMARY KEY CLUSTERED 
-(
-	[empresa] ASC,
-	[idServicioOrigen] ASC,
-	[idServicioTraslape] ASC,
-	[fechaing] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [int] NOT NULL
 ) ON [PRIMARY]
 
 GO
-
-/****** Object:  Table [dbo].[SucursalServicio]    Script Date: 09/06/2016 12:03:46 a.m. ******/
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[SucursalServicio]    Script Date: 16/06/2016 11:41:52 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[SucursalServicio](
 	[empresa] [smallint] NOT NULL,
@@ -1513,7 +1572,7 @@ CREATE TABLE [dbo].[SucursalServicio](
 	[usuariomod] [nvarchar](50) NULL,
 	[maquinaing] [nvarchar](50) NOT NULL,
 	[maquinamod] [nvarchar](50) NULL,
-	[eliminado] char(1) not null,
+	[eliminado] [char](1) NOT NULL,
 	[rowVersion] [int] NOT NULL,
  CONSTRAINT [PK_SucursalServicio] PRIMARY KEY CLUSTERED 
 (
@@ -1525,91 +1584,213 @@ CREATE TABLE [dbo].[SucursalServicio](
 ) ON [PRIMARY]
 
 GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[TipoProducto]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[TipoProducto](
+	[empresa] [smallint] NOT NULL,
+	[idTipoProducto] [int] IDENTITY(1,1) NOT NULL,
+	[clasificacionTP] [char](10) NOT NULL,
+	[nombre] [nvarchar](50) NOT NULL,
+	[descripcion] [nvarchar](150) NULL,
+	[padre] [int] NULL,
+	[fechaing] [datetime] NOT NULL,
+	[fechamod] [datetime] NULL,
+	[usuarioing] [nvarchar](50) NOT NULL,
+	[usuariomod] [nvarchar](50) NULL,
+	[maquinaing] [nvarchar](50) NOT NULL,
+	[maquinamod] [nvarchar](50) NULL,
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [int] NOT NULL,
+ CONSTRAINT [PK_TipoProducto] PRIMARY KEY CLUSTERED 
+(
+	[idTipoProducto] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[TipoServicio]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[TipoServicio](
+	[empresa] [smallint] NOT NULL,
+	[idTipoServicio] [int] NOT NULL,
+	[nombre] [nvarchar](50) NOT NULL,
+	[descripcion] [nvarchar](150) NULL,
+	[padre] [int] NULL,
+	[coordinacion] [char](10) NOT NULL,
+	[cuentaSAP] [nvarchar](50) NULL,
+	[fechaing] [datetime] NOT NULL,
+	[fechamod] [datetime] NULL,
+	[usuarioing] [nvarchar](50) NOT NULL,
+	[usuariomod] [nvarchar](50) NULL,
+	[maquinaing] [nvarchar](50) NOT NULL,
+	[maquinamod] [nvarchar](50) NULL,
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [int] NOT NULL,
+ CONSTRAINT [PK_TipoServicio_1] PRIMARY KEY CLUSTERED 
+(
+	[empresa] ASC,
+	[idTipoServicio] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
-create table ServicioPlan(
-empresa smallint
-, idServicioPlan int  (PK)
-, idSucursal int
-, idCliente int
-, montoTotal money
-, descuento money
-, cuotas money
-, plazo char(10)
-, periodo char(10)
-,	[fechaing] [datetime] NOT NULL
-,	[fechamod] [datetime] NULL
-,	[usuarioing] [nvarchar](50) NOT NULL
-,	[usuariomod] [nvarchar](50) NULL
-,	[maquinaing] [nvarchar](50) NOT NULL
-,	[maquinamod] [nvarchar](50) NULL
-,	[eliminado] char(1) not null
-,	[rowVersion] [int] NOT NULL
-)
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Ubicacion]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
+GO
+CREATE TABLE [dbo].[Ubicacion](
+	[empresa] [smallint] NULL,
+	[idSucursal] [int] NULL,
+	[idUbicacion] [int] NULL,
+	[descripcion] [varchar](250) NULL,
+	[idDireccion] [int] NULL,
+	[idEncargado] [int] NULL,
+	[fechaing] [datetime] NOT NULL,
+	[fechamod] [datetime] NULL,
+	[usuarioing] [nvarchar](50) NOT NULL,
+	[usuariomod] [nvarchar](50) NULL,
+	[maquinaing] [nvarchar](50) NOT NULL,
+	[maquinamod] [nvarchar](50) NULL,
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [int] NOT NULL
+) ON [PRIMARY]
 
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[UbicacionAtributo]    Script Date: 16/06/2016 11:41:52 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING OFF
+GO
+CREATE TABLE [dbo].[UbicacionAtributo](
+	[empresa] [smallint] NULL,
+	[idUbicacion] [int] NULL,
+	[nombre] [varchar](30) NULL,
+	[descripcion] [varchar](100) NULL,
+	[valor] [varchar](20) NULL,
+	[fechaing] [datetime] NOT NULL,
+	[fechamod] [datetime] NULL,
+	[usuarioing] [nvarchar](50) NOT NULL,
+	[usuariomod] [nvarchar](50) NULL,
+	[maquinaing] [nvarchar](50) NOT NULL,
+	[maquinamod] [nvarchar](50) NULL,
+	[eliminado] [char](1) NOT NULL,
+	[rowVersion] [int] NOT NULL
+) ON [PRIMARY]
 
-create table DetalleServicioPlan (
-empresa
-,idSucursal int
-,idServicioPlan int (fk, pk)
-,idServicio int (fk, pk)
-,montoServicio money
-,descuento money
-,fechaInicio datetime
-,sesiones int
-,	[fechaing] [datetime] NOT NULL
-,	[fechamod] [datetime] NULL
-,	[usuarioing] [nvarchar](50) NOT NULL
-,	[usuariomod] [nvarchar](50) NULL
-,	[maquinaing] [nvarchar](50) NOT NULL
-,	[maquinamod] [nvarchar](50) NULL
-,	[eliminado] char(1) not null
-,	[rowVersion] [int] NOT NULL
-)
-
-
-create table Ubicacion(
-empresa
-,idSucursal int
-,idUbicacion int PK
-,descripcion varchar(250)
-,idDireccion int
-,idEncargado int
-,	[fechaing] [datetime] NOT NULL
-,	[fechamod] [datetime] NULL
-,	[usuarioing] [nvarchar](50) NOT NULL
-,	[usuariomod] [nvarchar](50) NULL
-,	[maquinaing] [nvarchar](50) NOT NULL
-,	[maquinamod] [nvarchar](50) NULL
-,	[eliminado] char(1) not null
-,	[rowVersion] [int] NOT NULL
-)
-
-create table UbicacionAtributo (
-empresa int
-,idUbicacion int      FK, pk
-,nombre varchar(30)   pk
-,descripcion varchar(100)
-,valor varchar(20)
-,	[fechaing] [datetime] NOT NULL
-,	[fechamod] [datetime] NULL
-,	[usuarioing] [nvarchar](50) NOT NULL
-,	[usuariomod] [nvarchar](50) NULL
-,	[maquinaing] [nvarchar](50) NOT NULL
-,	[maquinamod] [nvarchar](50) NULL
-,	[eliminado] char(1) not null
-,	[rowVersion] [int] NOT NULL
-)
-
-create table ProductoProveedor(
- empresa int
- ,idProducto int (FK, PK)
- ,idProveedor int (FK, PK)
- ,ultimaCompra datetime  
-,	[fechaing] [datetime] NOT NULL
-,	[usuarioing] [nvarchar](50) NOT NULL
-,	[maquinaing] [nvarchar](50) NOT NULL
-,	[eliminado] char(1) not null
-)
+GO
+SET ANSI_PADDING OFF
+GO
+ALTER TABLE [dbo].[Descuento]  WITH CHECK ADD  CONSTRAINT [FK_Descuento_Documento] FOREIGN KEY([idDoc])
+REFERENCES [dbo].[Documento] ([idDoc])
+GO
+ALTER TABLE [dbo].[Descuento] CHECK CONSTRAINT [FK_Descuento_Documento]
+GO
+ALTER TABLE [dbo].[Descuento]  WITH CHECK ADD  CONSTRAINT [FK_Descuento_Movimiento] FOREIGN KEY([idMov])
+REFERENCES [dbo].[Movimiento] ([idMov])
+GO
+ALTER TABLE [dbo].[Descuento] CHECK CONSTRAINT [FK_Descuento_Movimiento]
+GO
+ALTER TABLE [dbo].[DetalleCita]  WITH CHECK ADD  CONSTRAINT [FK_DetalleCita_Cita] FOREIGN KEY([idCita])
+REFERENCES [dbo].[Cita] ([idCita])
+GO
+ALTER TABLE [dbo].[DetalleCita] CHECK CONSTRAINT [FK_DetalleCita_Cita]
+GO
+ALTER TABLE [dbo].[DetalleOrdenProducto]  WITH CHECK ADD  CONSTRAINT [FK_DetalleOrdenProducto_OrdenCliente] FOREIGN KEY([idOrdenCliente])
+REFERENCES [dbo].[OrdenCliente] ([idOrdenCliente])
+GO
+ALTER TABLE [dbo].[DetalleOrdenProducto] CHECK CONSTRAINT [FK_DetalleOrdenProducto_OrdenCliente]
+GO
+ALTER TABLE [dbo].[DetalleOrdenServicio]  WITH CHECK ADD  CONSTRAINT [FK_DetalleOrdenServicio_OrdenCliente] FOREIGN KEY([idOrdenCliente])
+REFERENCES [dbo].[OrdenCliente] ([idOrdenCliente])
+GO
+ALTER TABLE [dbo].[DetalleOrdenServicio] CHECK CONSTRAINT [FK_DetalleOrdenServicio_OrdenCliente]
+GO
+ALTER TABLE [dbo].[DetCatalogo]  WITH CHECK ADD  CONSTRAINT [FK_DetCatalogo_CabCatalogo] FOREIGN KEY([cd_IdCatalogo])
+REFERENCES [dbo].[CabCatalogo] ([cc_IdCatalogo])
+GO
+ALTER TABLE [dbo].[DetCatalogo] CHECK CONSTRAINT [FK_DetCatalogo_CabCatalogo]
+GO
+ALTER TABLE [dbo].[Documento]  WITH CHECK ADD  CONSTRAINT [FK_Documento_SerieFactura] FOREIGN KEY([idSerieFactura])
+REFERENCES [dbo].[SerieFactura] ([idSerieFactura])
+GO
+ALTER TABLE [dbo].[Documento] CHECK CONSTRAINT [FK_Documento_SerieFactura]
+GO
+ALTER TABLE [dbo].[FacturaActualCaja]  WITH CHECK ADD  CONSTRAINT [FK_FacturaActualCaja_Documento] FOREIGN KEY([idDoc])
+REFERENCES [dbo].[Documento] ([idDoc])
+GO
+ALTER TABLE [dbo].[FacturaActualCaja] CHECK CONSTRAINT [FK_FacturaActualCaja_Documento]
+GO
+ALTER TABLE [dbo].[FacturaFormaPago]  WITH CHECK ADD  CONSTRAINT [FK_FacturaFormaPago_Documento] FOREIGN KEY([idDoc])
+REFERENCES [dbo].[Documento] ([idDoc])
+GO
+ALTER TABLE [dbo].[FacturaFormaPago] CHECK CONSTRAINT [FK_FacturaFormaPago_Documento]
+GO
+ALTER TABLE [dbo].[Movimiento]  WITH CHECK ADD  CONSTRAINT [FK_Movimiento_Documento] FOREIGN KEY([idDoc])
+REFERENCES [dbo].[Documento] ([idDoc])
+GO
+ALTER TABLE [dbo].[Movimiento] CHECK CONSTRAINT [FK_Movimiento_Documento]
+GO
+ALTER TABLE [dbo].[Movimiento]  WITH CHECK ADD  CONSTRAINT [FK_Movimiento_OrdenCliente] FOREIGN KEY([idOrdenCliente])
+REFERENCES [dbo].[OrdenCliente] ([idOrdenCliente])
+GO
+ALTER TABLE [dbo].[Movimiento] CHECK CONSTRAINT [FK_Movimiento_OrdenCliente]
+GO
+ALTER TABLE [dbo].[MovimientoCuentaXCobrar]  WITH CHECK ADD  CONSTRAINT [FK_MovimientoCuentaXCobrar_CuentaXCobrar] FOREIGN KEY([idCuentaXCobrar])
+REFERENCES [dbo].[CuentaXCobrar] ([idCuentaXCobrar])
+GO
+ALTER TABLE [dbo].[MovimientoCuentaXCobrar] CHECK CONSTRAINT [FK_MovimientoCuentaXCobrar_CuentaXCobrar]
+GO
+ALTER TABLE [dbo].[PrecioProducto]  WITH CHECK ADD  CONSTRAINT [FK_PrecioProducto_Producto] FOREIGN KEY([idProducto])
+REFERENCES [dbo].[Producto] ([idProd])
+GO
+ALTER TABLE [dbo].[PrecioProducto] CHECK CONSTRAINT [FK_PrecioProducto_Producto]
+GO
+ALTER TABLE [dbo].[PrecioServicio]  WITH CHECK ADD  CONSTRAINT [FK_PrecioServicio_Servicio] FOREIGN KEY([idServicio])
+REFERENCES [dbo].[Servicio] ([idServicio])
+GO
+ALTER TABLE [dbo].[PrecioServicio] CHECK CONSTRAINT [FK_PrecioServicio_Servicio]
+GO
+ALTER TABLE [dbo].[Producto]  WITH CHECK ADD  CONSTRAINT [FK_Producto_TipoProducto] FOREIGN KEY([tipoProducto])
+REFERENCES [dbo].[TipoProducto] ([idTipoProducto])
+GO
+ALTER TABLE [dbo].[Producto] CHECK CONSTRAINT [FK_Producto_TipoProducto]
+GO
+ALTER TABLE [dbo].[ProductoProveedor]  WITH CHECK ADD  CONSTRAINT [FK_ProductoProveedor_Producto] FOREIGN KEY([idProducto])
+REFERENCES [dbo].[Producto] ([idProd])
+GO
+ALTER TABLE [dbo].[ProductoProveedor] CHECK CONSTRAINT [FK_ProductoProveedor_Producto]
+GO
+ALTER TABLE [dbo].[Propina]  WITH CHECK ADD  CONSTRAINT [FK_Propina_DetalleOrdenServicio] FOREIGN KEY([idDetalleOrdenServicio])
+REFERENCES [dbo].[DetalleOrdenServicio] ([idDetalleOrdenServicio])
+GO
+ALTER TABLE [dbo].[Propina] CHECK CONSTRAINT [FK_Propina_DetalleOrdenServicio]
+GO
+USE [master]
+GO
+ALTER DATABASE [new_ortodental] SET  READ_WRITE 
+GO
 
 
