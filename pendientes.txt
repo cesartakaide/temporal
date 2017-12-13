@@ -1,0 +1,3 @@
+realizar los siguientes analisis:
+1. revisar bien la creacion y mantto de ordenes de cliente. Separar la creacion de la orden con el ingreso del detalle.
+2. acoplar mejor los daos para la facturacion, para poder proceder con esas pantallas.
