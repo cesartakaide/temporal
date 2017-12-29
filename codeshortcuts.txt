@@ -1,0 +1,352 @@
+<div ng-controller="DetalleServicioController"  class="container-fluid" ng-init='init()'>   
+  <div class="row">    
+    <uib-tabset active="activeForm">
+      <uib-tab index="0" heading="informacion">
+        <form class="form-horizontal">          
+          <div class="form-group">
+		  </div>
+        </form>
+      </uib-tab>
+	  
+	  <uib-tab index="1" heading="informacion del sistema">
+		<informacion-sistema bean="parametro"></informacion-sistema>
+	  </uib-tab> 	  
+    </uib-tabset>
+  </div>	
+</div>   
+
+
+
+	  	    <table datatable="ng" dt-options="dtOptions" class="row-border hover">
+	        <thead>
+	        <tr>
+	            <th></th>
+				.....
+	        </tr>
+	        </thead>
+	        <tfoot>
+	        <tr>
+	            <th></th>
+				.....	
+	        </tr>
+	        </tfoot>
+	        <tbody>
+	        <tr ng-repeat="registro in listado" ng-click="setFilaSeleccionada(registro)" >
+	        	<td>{{registro.correlativo}}</td>
+	            .....
+	        </tr>
+	        </tbody>
+	    	</table>   	  
+			
+			<div ui-grid="gridReferencias" ui-grid-selection class="grid" ng-click="seleccionarReferencia()" ></div>
+			
+			--para iniciar grid.
+			$scope.gridDirecciones = initGrid($scope,[ 
+               { name: 'correlativo', displayName : 'correlativo' }
+	          ,{ name: 'correlativo', displayName : 'correlativo' }]);
+			
+<label-field label="" value=""/>
+
+<text-field label="" read-only="readOnly" value=""/>
+
+<date-picker  label="" fecha-mascara="dd/mm/yyyy" read-only="readOnly" fecha-valor=""/>
+
+<combo-catalog label="" catalog-domain="ERP_CATALOGS" catalog-name="" on-click="" read-only="readOnly" value=""/>
+<combo-catalog-rest label="" catalog-domain="ERP_CATALOGS" catalog-name="" on-click="" read-only="readOnly" value=""/>
+
+<enum-combo  label="" enum-class="" read-only="readOnly" value="" />
+<enum-combo-rest  label="" enum-class="" read-only="readOnly" value="" />
+
+<list-combo  label="" list-values="" key-column="" value-column="" read-only="" value="" />
+  
+<check-field label="" read-only="readOnly" valor=""/>
+
+<check-list-catalog-combo label="" catalog-domain="" catalog-name="" read-only="" value="" />
+
+<check-list-enum-combo label="" enum-class="" read-only="readOnly"  value="" />
+  
+  
+  
+  
+"use strict";
+var myApp = angular.module('MainWindow');
+//titulo []
+myApp.controller('DetalleServicioController', ['$scope', '$controller', '$stateParams', '$location', '$q', '$state', '$log'
+                    ,'DTOptionsBuilder' , 'showError', 'showConfirmation',  'executeAjax', 'systemMessage' , 'executeAjaxConf'    //servicios                                        
+                                       , function($scope,  $controller, $stateParams, $location, $q,  $state, $log
+					, DTOptionsBuilder , showError, showConfirmation, executeAjax, systemMessage, executeAjaxConf) {
+	//inicializacion de datatable.
+    $scope.dtOptions = DTOptionsBuilder.newOptions()
+    .withPaginationType('full_numbers')
+    .withSelect({
+       style:    'os',
+       selector: 'tr'
+    });    
+    $scope.readOnly = false;    
+    $scope.parametro = {};
+    $scope.operacion = $stateParams.operacion;    
+	
+	$scope.init = function(){
+        setPropertyPath($scope.parametro, 'correlativo', $stateParams.idServicio);
+        		
+		inicializacionPantalla($scope, $stateParams,$location);
+		inicializacionPantallaMantto($scope, $log, $scope.defaultData);			
+	};	
+	
+	$scope.consulta = function(){  
+	};
+	
+	$scope.manttoOperacion = function(){
+		
+	};
+}]);
+	 
+executeAjax(parameterData, ajaxPackage, ajaxAction, ajaxMethod, function(results){
+});
+
+getcatalog ('ERP_CATALOGS', catalogName, catalogDetail, catalogReferences, function(catDetail){
+}) ;
+  
+@Service
+@Scope("singleton")
+@ImportResource("classpath:/META-INF/WebComponentsBeans.xml")  
+			
+			
+--------pantalla modal --------
+
+"use strict";
+var myApp = angular.module('MainWindow');
+//titulo [planilla modal]
+myApp.controller('XXXXXXXXX', ['$scope', '$controller', '$stateParams', '$location', '$q', '$state', '$log'
+                    ,'DTOptionsBuilder' , 'showError', 'showConfirmation',  'executeAjax', '$uibModalInstance'    //servicios
+					,'callBack'
+                    
+                                       , function($scope,  $controller, $stateParams, $location, $q,  $state, $log
+					, DTOptionsBuilder , showError, showConfirmation, executeAjax, $uibModalInstance
+					, callBack) {
+	//inicializacion de datatable.
+    $scope.dtOptions = DTOptionsBuilder.newOptions()
+    .withPaginationType('full_numbers')
+    .withSelect({
+       style:    'os',
+       selector: 'tr'
+    });    
+    $scope.readOnly = false;
+
+	$scope.init = function(){                		
+		
+	};	
+
+	$scope.parametro = {};
+	$scope.setFilaSeleccionada = function(registro){
+		$scope.parametro = registro;
+	};	
+	
+	$scope.init();
+
+	$scope.aceptar = function(){
+		callBack($scope.parametro);
+		$uibModalInstance.close();
+	}
+	
+	$scope.cancelar = function(){
+		$uibModalInstance.close();
+	};
+	
+}]);
+
+myApp.factory('xxxxx', [ '$uibModal',  function( $uibModal) {
+    return function( callBack ) {	   
+      
+ 	   var modalInstance = $uibModal.open({
+ 		      animation: true,
+ 		      templateUrl : 'app/administracion/planilla/PlanillaDetalleModal.html',
+ 		      controller: 'PlanillaDetalleController',
+ 		      size: 'lg', 
+ 		      resolve : {	 	            
+ 	   			callBack : function(){
+ 	   				return callBack;
+ 	   			} 	   			
+ 		      }
+ 	   });
+ 	   
+    };
+ }]);
+ 
+ 
+<div class='modal-header'>
+	<h3 class='modal-title'>listado de cuentas por cobrar</h3>
+</div>    
+<div class='modal-body'>
+  <div class="row">    
+    <uib-tabset active="activeForm">
+      <uib-tab index="0" heading="informacion">
+        <form class="form-horizontal">                  
+          <div class="form-group">
+			<table datatable="ng" dt-options="dtOptions" class="row-border hover">
+			<thead>
+			  <tr>
+			      <th>correlativo</th>
+			      ....
+			  </tr>
+			</thead>
+			<tfoot>
+			   <tr>
+			      <th>correlativo</th>
+			      ....
+			   </tr>
+			</tfoot>
+			<tbody>
+			    <tr ng-repeat="registro in listado" ng-click="setFilaSeleccionada(registro)" >
+			      	<td>{{registro.correlativo}}</td>
+			        ....
+			    </tr>
+			 </tbody>
+			 </table>   		 
+	     </div>
+	   </form>
+	  </uib-tab>
+	</uib-tabset>
+  </div>
+</div>    
+<div class='modal-footer'>
+    <button class='btn btn-primary' type='button' ng-click='aceptar()'>OK</button>
+    <button class='btn btn-secondary' type='button' ng-click='cancelar()'>cancelar</button>
+</div>
+
+
+
+
+'use strict';
+var myApp = angular.module('MainWindow');
+//[SOLO REFERENCIA][USER METHOD]
+myApp.factory('DetallePersonaPostLoad', [ 'showError',  '$http', '$log', '$rootScope', 'projectSite', 'systemMessage' ,'showMessage'
+ , function(showError, $http, $log, $rootScope, projectSite, systemMessage , showMessage) {
+	return function DetallePersonaPostLoad($scope, parametro, personaReferencia, presupuestoPersona, medioContacto, referenciaPersonal, personaDireccion, personaCuentaBancaria, personaEvento){
+	};
+}]);	
+
+
+<@pathRenderer pathValue=XXXX />
+
+IDetailDao<T>
+ implements IQueryDao<T>
+ implements IManttoDao<T>
+
+	object.setEmpresa(0);
+
+dao.setOperacion(ERPUtils.convert(operation));
+	
+@RestController
+@RequestMapping("/Empleado")
+@ControllerMetadata(directory="administracion/planilla", primaryKeyFields={	
+	@ControllerPrimaryKeyField(name="correlativo", path="correlativo")	
+})	
+	
+	@RequestMapping( method = RequestMethod.GET, value="/{correlativo}")
+	public @ResponseBody Empleado detail ( @PathVariable long correlativo) throws RestException{
+		return detailBase(correlativo);
+	}
+
+	@Override
+	public Empleado buildParameter(Object... params) throws Exception {
+		long corr =  (Long) params[0];
+		Empleado c = new Empleado();
+		c.setCorrelativo(corr);
+		return c;
+	}
+	
+	@RequestMapping( method = RequestMethod.POST, value="/query")
+	public @ResponseBody List<Empleado> list (@RequestBody Empleado criterio)  throws RestException{
+		return listBase(criterio);
+	}
+	
+	@RequestMapping( method = RequestMethod.POST)
+	public @ResponseBody Empleado create(@RequestBody Empleado parametro) throws RestException {
+		return createBase(parametro);
+	}	
+	
+	@RequestMapping( method = RequestMethod.PUT)
+	public @ResponseBody Empleado update(@RequestBody Empleado parametro) throws RestException {
+		return updateBase(parametro);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{correlativo}")
+	public void remove( @PathVariable long correlativo) throws RestException{
+		deleteBase(correlativo);
+	}	
+
+	
+---------------------------------------------- CONFIGURACION XML ---------------------------------------------------------	
+	
+CAMPO DEFAULT	
+text field
+<tns:field label="" name="" localVariable="" localVariablePath="" type="text-field"></tns:field>
+<tns:field label="" name="" localVariable="" localVariablePath="" type="label-field"></tns:field>
+<tns:field label="" name="" localVariable="" localVariablePath="" type="datepicker"></tns:field>
+
+enum combo
+<tns:field label="" name="" localVariable="" localVariablePath="" type="enum-combo"></tns:field>
+
+combo catalog
+	          <tns:field label="" name="" localVariable="parametro" localVariablePath="tipoEvento" type="combo-catalog">
+	          	<tns:attributes>
+	          		<tns:atribute name="domain" value="ERP_CATALOGS"/>
+	          		<tns:atribute name="name" value=""/>
+	          	</tns:attributes>
+	          </tns:field>
+
+listado			  
+	               <tns:field label="empleado correlativo" name="lblEmpleadoCorrelativo" localVariable="detalleSeleccionado" localVariablePath="empleado/correlativo" type="list-combo">
+	                  <tns:attributes>
+	                     <tns:atribute name="listValues" value=""/>
+	                     <tns:atribute name="keyColumn" value=""/>
+	                     <tns:atribute name="valueColumn" value=""/>
+	                  </tns:attributes>	                  	                  
+	               </tns:field>	 			  
+
+BOTON
+    				    <tns:field label="" name="" type="button">
+    				    	<tns:eventChain type="onClick">
+    				    		<tns:event>
+    				    		 <tns:link></tns:link>
+    				    		</tns:event>
+    				    	</tns:eventChain>
+    				    </tns:field>
+
+						
+						
+<tns:screen name="DetalleCuentaBancaria" title="detalle cuenta bancaria">
+
+    <tns:variables>
+    	<tns:variable variableName=""/>
+    </tns:variables>
+
+	<tns:parameters>
+		<tns:param/>
+	</tns:parameters>
+	
+	<tns:menuBarActions>
+	   <tns:button menuBarButton="Agregar">
+	      <tns:eventChain type="onClick">
+	          <tns:event>
+	             <tns:controller></tns:controller>
+	          </tns:event>
+	      </tns:eventChain>
+	   </tns:button>
+	</tns:menuBarActions>
+	
+	<tns:onInit type="onLoad"></tns:onInit>
+	
+	<tns:form>
+		<tns:row>
+		   <tns:fields>
+		      <tns:field label="" name="" localVariable="" localVariablePath="" type="text-field"></tns:field>
+		   </tns:fields>
+		</tns:row>
+	</tns:form>
+	
+</tns:screen>						
+	
+
+	
