@@ -1,3 +1,6 @@
-realizar los siguientes analisis:
-1. revisar bien la creacion y mantto de ordenes de cliente. Separar la creacion de la orden con el ingreso del detalle.
-2. acoplar mejor los daos para la facturacion, para poder proceder con esas pantallas.
+11/01/2018
+1. actualizar los manttos de las tablas, que restaure un registro que ha sido borrado anteriormente.
+2. revisar bien las validaciones del mapeo de las columnas, al parecer no se estan disparando.
+3. incluir el rowVersion como llave primaria.
+4. revisar el reseteo de los links acumulados, no se esta respetando cuando se selecciona una opcion del menu.
+
