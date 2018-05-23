@@ -1,1 +1,0 @@
-https://netbanking.citibank.com/pagoImpuestoMH/pagoimpuesto?institucion=51&token=434343
