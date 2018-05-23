@@ -1,6 +1,0 @@
-11/01/2018
-1. actualizar los manttos de las tablas, que restaure un registro que ha sido borrado anteriormente.
-2. revisar bien las validaciones del mapeo de las columnas, al parecer no se estan disparando.
-3. incluir el rowVersion como llave primaria.
-4. revisar el reseteo de los links acumulados, no se esta respetando cuando se selecciona una opcion del menu.
-
